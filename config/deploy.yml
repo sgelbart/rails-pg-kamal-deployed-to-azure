@@ -1,0 +1,54 @@
+<% require "dotenv"; Dotenv.load(".env") %>
+
+# Name of your application. Used to uniquely configure containers.
+service: rails-pg-kamal-deployed-to-azure
+
+# Name of the container image.
+image: serv/rails-pg-kamal-deployed-to-azure
+
+# Deploy to these servers.
+servers:
+  web:
+    hosts:
+        - 128.24.112.50
+  # job:
+  #   hosts:
+  #     - 192.168.0.1
+  #   cmd: bin/jobs
+
+# Enable SSL auto certification via Let's Encrypt (and allow for multiple apps on one server).
+# Set ssl: false if using something like Cloudflare to terminate SSL (but keep host!).
+proxy:
+  ssl: false
+  # host: 52.146.91.48
+  # kamal-proxy connects to your container over port 80, use `app_port` to specify a different port.
+  app_port: 3000
+  healthcheck:
+    path: /up
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  server: railskamaldeployedtoazure.azurecr.io
+  username: railskamaldeployedtoazure
+
+  # Always use an access token rather than real password when possible.
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+# Inject ENV variables into containers (secrets come from .env).
+# Remember to run `kamal env push` after making changes!
+env:
+  clear:
+    DB_HOST: <%= ENV["DB_HOST"] %>
+  secret:
+    - RAILS_MASTER_KEY
+    - KAMAL_REGISTRY_PASSWORD
+    - POSTGRES_PASSWORD
+# Use a different ssh user than root
+ssh:
+  user: azureuser
+
+builder:
+  arch: amd64
+volumes:
+  - 'storage:/rails/storage'

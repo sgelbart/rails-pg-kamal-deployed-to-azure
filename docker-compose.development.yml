@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16.2-alpine
+    container_name: rails-pg-kamal-deployed-to-azure-development-db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rails_pg_kamal_deployed_to_azure_development
+    ports:
+      - '5442:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
