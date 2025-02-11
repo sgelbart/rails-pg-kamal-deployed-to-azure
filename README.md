@@ -1,21 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
+Based on the tutorial series at 
+https://blog.jasonkim.ca/post/deploy-rails-721-managed-postgresql-app-to-azure-using-kamal-211
 
 * Services (job queues, cache servers, search engines, etc.)
 
