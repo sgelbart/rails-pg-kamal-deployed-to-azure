@@ -20,8 +20,6 @@ servers:
 # Set ssl: false if using something like Cloudflare to terminate SSL (but keep host!).
 proxy:
   ssl: false
-  # host: 52.146.91.48
-  # kamal-proxy connects to your container over port 80, use `app_port` to specify a different port.
   app_port: 3000
   healthcheck:
     path: /up
@@ -40,6 +38,7 @@ registry:
 env:
   clear:
     DB_HOST: <%= ENV["DB_HOST"] %>
+    POSTGRES_USER: <%= ENV["POSTGRES_USER"] %>
   secret:
     - RAILS_MASTER_KEY
     - KAMAL_REGISTRY_PASSWORD
@@ -50,5 +49,4 @@ ssh:
 
 builder:
   arch: amd64
-volumes:
-  - 'storage:/rails/storage'
+  remote: ssh://azureuser@128.24.112.50
